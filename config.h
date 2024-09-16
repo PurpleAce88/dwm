@@ -4,20 +4,20 @@
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int gappx     = 5;        /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
-static const int showbar            = 0;        /* 0 means no bar */
+static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "eldur:size=10" };
-static const char dmenufont[]       = "eldur:size=10";
-//background color
-static const char col_gray1[]       = "#2e4045";
+static const char *fonts[]          = { "eldur:size=11" };
+static const char dmenufont[]       = "eldur:size=11";
+//background color of the bar
+static const char col_gray1[]       = "#010101";
 //inactive window border color
-static const char col_gray2[]       = "#5e3c58";
+static const char col_gray2[]       = "#010101";
 //font color
-static const char col_gray3[]       = "#83adb0";
+static const char col_gray3[]       = "#f6f6f6";
 //current tag && current window font color
-static const char col_gray4[]       = "#000000";
+static const char col_gray4[]       = "#010101";
 //active border && bar second
-static const char col_cyan[]        = "#bfb5b2";
+static const char col_cyan[]        = "#6f6f6f";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
@@ -72,12 +72,16 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *termcmd[]  = { "st", "-f", dmenufont, NULL };
-static const char *picom[] = { "picom", NULL };
-static const char *dragon[] = { "feh", "--bg-fill", "/home/purple/Pictures/reallyCoolPictures/dragon.jpeg", NULL };
-static const char *shino[] = { "feh", "--bg-fill", "/home/purple/Pictures/reallyCoolPictures/shino2.jpg", NULL };
+static const char *termcmd[]  = { "st", NULL };
+static const char *dragon[] = { "feh", "--bg-fill", "/home/purple/Pictures/reallyCoolPictures/Backgrounds/dragon.jpeg", NULL };
+static const char *shino[] = { "feh", "--bg-fill", "/home/purple/Pictures/reallyCoolPictures/Backgrounds/laincomp.png", NULL };
 static const char *brighter[] = { "brightnessctl", "set", "10%+", NULL };
 static const char *dimmer[]   = { "brightnessctl", "set", "10%-", NULL };
+static const char *lock[] = { "slock", NULL };
+static const char *dark[] = { "brightnessctl", "set", "0", NULL };
+static const char *screenshot[] = { "gnome-screenshot", NULL};
+static const char *bluetooth[] = { "blueman-manager", NULL};
+static const char *discord[] = { "discord", NULL};
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_e,      spawn,          {.v = dmenucmd } },
@@ -106,13 +110,17 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_equal,  setgaps,        {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_equal,  setgaps,        {.i = 0  } },
 	{ MODKEY,                       XK_F6, spawn, {.v = downvol } },
-	{ MODKEY,                       XK_p,  spawn, {.v = picom } },
 	{ MODKEY,                       XK_F7, spawn, {.v = upvol   } },
 	{ MODKEY,                       XK_F5, spawn, {.v = mutevol  } },
 	{ MODKEY,                       XK_n, spawn,  {.v = dragon } },
 	{ MODKEY,                       XK_s, spawn,  {.v = shino } },
-	{ 0, XF86XK_MonBrightnessDown, spawn, {.v = dimmer } },
-        { 0, XF86XK_MonBrightnessUp,   spawn, {.v = brighter } },
+	{ MODKEY|ShiftMask,             XK_x, spawn,  {.v = lock } },
+	{ MODKEY|ShiftMask,             XK_b, spawn,  {.v = bluetooth } },
+	{ MODKEY|ShiftMask,             XK_d, spawn,  {.v = discord } },
+	{ MODKEY,                       XK_F9, spawn, {.v = dimmer } },
+        { MODKEY,                       XK_F10,spawn, {.v = brighter } },
+	{ MODKEY|ShiftMask, XK_p,    spawn, {.v = screenshot } },
+	{ MODKEY,                       XK_x, spawn, {.v = dark } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
